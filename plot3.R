@@ -1,0 +1,12 @@
+Database <- read.table("household_power_consumption.txt", header = TRUE, sep = ";")
+Database <- Database[Database [,1] == "1/2/2007" | Database [,1] == "2/2/2007",]
+Database$Global_active_power <- as.numeric(Database$Global_active_power)
+String <- paste (Database$Date, Database$Time)
+DataTime <- strptime (String,"%d/%m/%Y %H:%M")
+png("plot3.png", width = 480, height = 480)
+plot (DataTime, Database$Sub_metering_1, type = "n", ylab = "Energy sub metering" , xlab = "")
+points (DataTime, Database$Sub_metering_1, col = "black", type ="l")
+points (DataTime, Database$Sub_metering_2, col = "red", type ="l")
+points (DataTime, Database$Sub_metering_3, col = "blue", type ="l")
+legend ("topright", legend = c ("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"), lty = 1, col = c ("black", "red", "blue"),y.intersp=0.5)
+dev.off ()
